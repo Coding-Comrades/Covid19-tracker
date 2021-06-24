@@ -32,23 +32,6 @@ const storeSchema = mongoose.Schema({
   district : String
 });
 
-var monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-
-// var today=new Date();
-// var date=today.getDate();
-// var monthnum=today.getMonth();
-
-
-// var currentdate = date + '-' + monthnum + '-' + year;
-// console.log(currentdate);
-var today = new Date();
-var date = today.toJSON().slice(0, 10);
-var nDate = date.slice(8, 10) + '-' + date.slice(5, 7) + '-' + date.slice(0, 4);
-var year=today.getFullYear();
-var month=monthNames[today.getMonth()];
-
-//console.log(dt);
-
 
 const Store = mongoose.model("Store",storeSchema);
   var datas;
@@ -126,104 +109,6 @@ app.post("/addlead",function(req,res){
 })
 
 
-
-let pincodeconfig = {
-  method: 'get',
-  url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=841231&date=09-05-2021',
-  headers: {
-      'accept': 'application/json',
-      'Accept-Language': 'hi_IN',
-      'User-Agent': 'covid19'
-  }
-};
-
-  var crdata;
-
-axios(pincodeconfig)
-  .then(response => {
-    crdata = response.data.centers;
-    console.log("Pin Code by 7 days api running");
-  
-  })
-  .catch(error => {
-      console.log(error);
-  });
-
-
-var stateselected;
-
-
-app.post("/pinform", function(req,res){
-
-  console.log(req.body.pininput);
-  
-});
-
-
-var distresponse;
-app.post("/select1", function(req,res){
-
-  var stateid = req.body.statelists;
-
-  
-
-  // res.render("select2", 
-  // {
-  //   distlist : distresponse
-  // }); 
-
-});
-
-
-app.post("/select2", function(req,res){
-
-  var distid = req.body.statelists;
-
-  let districtconfig = {
-    method: 'get',
-    url: 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=' + distid + '&date=' + nDate,
-    headers: {
-        'accept': 'application/json',
-        'Accept-Language': 'hi_IN',
-        'User-Agent': 'covid19'
-    }
-  };
-
-  axios(districtconfig)
-  .then(response => {
-    console.log("district by 7 days api running");
-    distresponse = response.data.centers;
-  })
-  .catch(error => {
-      console.log(error);
-  });
-});
-
-app.get("/vaccination", function(req,res){
-
-
-  var dt1=date+" "+month+" "+year;
-  var dt2=date+1+" "+month+" "+year;
-  var dt3=date+2+" "+month+" "+year;
-  var dt4=date+3+" "+month+" "+year;
-  var dt5=date+4+" "+month+" "+year;
-  var dt6=date+5+" "+month+" "+year;
-  var dt7=date+6+" "+month+" "+year;
-
-
-  res.render("vaccination", 
-  {
-    todaydate1: dt1,todaydate2: dt2,todaydate3: dt3,todaydate4: dt4,todaydate5: dt5,todaydate6: dt6,todaydate7: dt7, 
-
-    centersData: crdata,
-
-    statelist: selectdata.statelist,
-    
-    distlist : selectdata.distlist,
-  }); 
-
-  
-});
 
 
 app.listen(port, function() {
