@@ -1,7 +1,8 @@
 <%- include("partials/header"); -%>
 
-        <!--Modal Start-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!--Modal Start-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,19 +12,20 @@
           </button>
         </div>
         <form action="/addlead" method="POST">
-        <div class="modal-body"> 
-  
+          <div class="modal-body">
+
             <div class="form-group">
               <label for="exampleInputEmail1">Store Name</label>
-              <input type="text" name="storeName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Store Name">
+              <input type="text" name="storeName" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp" placeholder="Store Name">
             </div>
-  
-  
+
+
             <div class="form-group">
               <label for="exampleInputPassword1">District</label>
               <input type="text" name="district" class="form-control" id="exampleInputPassword1" placeholder="District">
             </div>
-  
+
             <div class="form-group">
               <label for="exampleInputPassword1">Address</label>
               <input type="text" name="address" class="form-control" id="exampleInputPassword1" placeholder="Address">
@@ -34,86 +36,93 @@
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Medicines</label>
-              <input type="text" name="medicine" class="form-control" id="exampleInputPassword1" placeholder="Medicines/Health Kit">
+              <input type="text" name="medicine" class="form-control" id="exampleInputPassword1"
+                placeholder="Medicines/Health Kit">
             </div>
-  
-  
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="inserData" class="btn btn-primary">Add</button>
-        </div>
-      </form>
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="inserData" class="btn btn-primary">Add</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
-  
-    <!--Modal End-->
+
+
+  <!--Modal End-->
 
 
 
-    <form action="/" method="post">
+  <form action="/" method="post">
 
-    
-        <!-- State Wise table  -->
 
-        
+    <!-- State Wise table  -->
 
-        <div class="container mb-3 mt-3">
-            <!-- <input type="text" name="" id="myInput" placeholder="Search Your Medicine/Oxygen Lead" onkeyup="search()"> -->
-            <button type="button" class="btn btn-dark addLead" data-toggle="modal" data-target="#exampleModal">
-                Add Lead
-              </button>
-              <div style="padding : 3% 2%" class="col-lg-4 col-md-6">
-                <%  newListItems.forEach(function(item){%>
-                  <div class="card">
-                    <div class="card-header">
-                      <h4><%= item.name %></h4>
-                    </div>
-                    <div class="card-body">
-                      <p> <%=item.address%></p>
-                      <p><i class="fas fa-map-marked-alt"></i><%= item.district %></p>
-                      <p><i class="fas fa-phone-alt"></i><%=item.contact%></p>
-                      <img src="https://img.icons8.com/pastel-glyph/20/000000/first-aid-kit.png"/>
-                      <p><%=item.medicine%></p>
-                    </div>
-                  </div>
-             <% }) %>
-              </div>  
-                
-              
-          </div>   
-          
-    </form>
 
-    <script>
-        function search()
-        {
-            let filter = document.getElementById('myInput').value.toUpperCase();
-            let myTable = document.getElementById('mydatatable');
 
-            let tr = myTable.getElementsByTagName('tr');
+    <div class="container   mb-3 mt-3">
+      <input type="text" name="" id="myInput" placeholder="Search Your Medicine/Oxygen Lead" onkeyup="myFunction()" >
+      <button type="button" class="btn btn-dark addLead" data-toggle="modal" data-target="#exampleModal">
+        Add Lead
+      </button>
+      <div class="row" id="myItems">
 
-            for(var i=0; i < tr.length; i++)
-            {
-                let td = tr[i].getElementsByTagName('td')[5];
+        <% newListItems.forEach(function(item){%>
+          <div style="padding : 3% 2%" class="col-lg-4 col-md-6">
+            <div class="card">
+              <div class="card-header text-center ">
+                <h4>
+                  <%= item.name %>
+                </h4>
+              </div>
+              <div class="card-body text-center">
+                <p>
+                  <%=item.address%>
+                </p>
+                <p><i class="fas fa-map-marked-alt"></i>
+                  <%= item.district %>
+                </p>
+                <p><i class="fas fa-phone-alt"></i> 
+                  <%=item.contact%>
+                </p>
+                <img src="https://img.icons8.com/pastel-glyph/20/000000/first-aid-kit.png" />
+                <p class="resource">
+                  <%=item.medicine%>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }) %>
 
-                if(td){
-                    let textvalue = td.textContent || td.innerHTML;
+      </div>
 
-                    if(textvalue.toUpperCase().indexOf(filter) > -1)
-                    {
-                        tr[i].style.display = "";
-                    }
-                    else
-                    {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
+
+    </div>
+
+  </form>
+
+  <script>
+    function myFunction() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItems");
+    cards = cardContainer.getElementsByClassName("card");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".resource");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none";
         }
-    </script>
+    }
+}
 
-<%- include("partials/footer"); -%>
+</script>
+
+
+  <%- include("partials/footer"); -%>

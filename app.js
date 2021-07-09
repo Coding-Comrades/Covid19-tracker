@@ -84,10 +84,10 @@ app.get("/medicines",function(req,res){
 });
 
 app.post("/addlead",function(req,res){
-  const storeName = req.body.storeName;
+  const storeName = _.capitalize(req.body.storeName);
   const storeDistrict = _.capitalize(req.body.district);
   const storeContact = _.capitalize(req.body.contact);
-  const storeAddress = _.capitalize(req.body.contact);
+  const storeAddress = _.capitalize(req.body.address);
   const storeMedicine = _.capitalize(req.body.medicine);
 
   // console.log(storeName);
